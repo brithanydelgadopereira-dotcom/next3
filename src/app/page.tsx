@@ -49,11 +49,11 @@ export default function Home() {
         );
         setItems(transformedData);
       } else {
-        toast.error('Failed to load images');
+        toast.error('Error al cargar las imágenes');
       }
     } catch (error) {
       console.error('Error fetching items:', error);
-      toast.error('Error loading images');
+      toast.error('Error al cargar las imágenes');
     } finally {
       setIsLoadingItems(false);
     }
@@ -80,7 +80,7 @@ export default function Home() {
         });
 
         if (!uploadResponse.ok) {
-          toast.error('Image upload failed');
+          toast.error('Error al subir la imagen');
           return;
         }
 
@@ -101,18 +101,18 @@ export default function Home() {
         });
 
         if (response.ok) {
-          toast.success('Image updated successfully!');
+          toast.success('¡Imagen actualizada exitosamente!');
           setEditingItem(undefined);
           setIsModalOpen(false);
           fetchItems();
         } else {
           const errorData = await response.json();
-          toast.error(errorData?.error || 'Failed to update image');
+          toast.error(errorData?.error || 'Error al actualizar la imagen');
         }
       } else {
         // Create new item
         if (!imageUrl) {
-          toast.error('Please upload an image');
+          toast.error('Por favor sube una imagen');
           return;
         }
 
@@ -127,17 +127,17 @@ export default function Home() {
         });
 
         if (response.ok) {
-          toast.success('Image added successfully!');
+          toast.success('¡Imagen agregada exitosamente!');
           setIsModalOpen(false);
           fetchItems();
         } else {
           const errorData = await response.json();
-          toast.error(errorData?.error || 'Failed to add image');
+          toast.error(errorData?.error || 'Error al agregar la imagen');
         }
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('An error occurred');
+      toast.error('Ocurrió un error');
     } finally {
       setIsSubmitting(false);
     }
@@ -154,16 +154,16 @@ export default function Home() {
       });
 
       if (response.ok) {
-        toast.success('Image deleted successfully!');
+        toast.success('¡Imagen eliminada exitosamente!');
         setIsDeleteModalOpen(false);
         setDeletingItem(undefined);
         fetchItems();
       } else {
-        toast.error('Failed to delete image');
+        toast.error('Error al eliminar la imagen');
       }
     } catch (error) {
       console.error('Error deleting item:', error);
-      toast.error('An error occurred');
+      toast.error('Ocurrió un error');
     } finally {
       setIsSubmitting(false);
     }
@@ -191,7 +191,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold text-gray-900">
-              Gallery CRUD
+              Galería de Imágenes
             </h1>
             <button
               onClick={() => {
@@ -201,7 +201,7 @@ export default function Home() {
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
             >
               <Plus size={20} />
-              <span>Add Image</span>
+              <span>Agregar Imagen</span>
             </button>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function Home() {
         <SearchBar
           value={searchQuery}
           onChange={setSearchQuery}
-          placeholder="Search images by title..."
+          placeholder="Buscar imágenes por título..."
         />
 
         {/* Loading State */}
@@ -221,7 +221,7 @@ export default function Home() {
           <div className="flex items-center justify-center py-12">
             <div className="flex flex-col items-center gap-2">
               <Loader className="animate-spin text-blue-500" size={32} />
-              <p className="text-gray-600">Loading images...</p>
+              <p className="text-gray-600">Cargando imágenes...</p>
             </div>
           </div>
         )}
@@ -245,15 +245,15 @@ export default function Home() {
           <div className="text-center py-12">
             <p className="text-gray-600 mb-4">
               {searchQuery
-                ? 'No images found matching your search.'
-                : 'No images yet. Click "Add Image" to get started!'}
+                ? 'No se encontraron imágenes que coincidan con tu búsqueda.'
+                : 'No hay imágenes aún. ¡Haz clic en "Agregar Imagen" para empezar!'}
             </p>
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
                 className="text-blue-500 hover:text-blue-600 underline"
               >
-                Clear search
+                Limpiar búsqueda
               </button>
             )}
           </div>
